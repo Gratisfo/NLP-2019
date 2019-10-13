@@ -30,7 +30,7 @@ define Genetive GenDen .o. Gen ;
 # Определяем окончание остальных падежей 
 define PartTa "+Part" -> t A || [ Consonant Vowel Vowel | Consonant ] Number _ ;
 define PartA "+Part" -> A || _ ;
-
+#Тут было неправильно определено окончанеи аллатива (lla, правильно lle)
 define LocativeCases "+In" -> s s A , "+All" -> l l E, "+El" -> s t A,  "+Abl" -> l t A,  "+Ad" -> l l A || _ ;
 #Определяем иллатив для единственного числа
 define aIll "+Ill" -> A n || [ a ] Number _ ;
@@ -85,3 +85,19 @@ define Cleanup "^" -> 0 || _ ;
 # Складываем все правила в одну грамматику 
 define Grammar Input .o. Affixes .o. Cleanup ;
 push Grammar
+
+
+
+
+#Все ошибки в выдаче:
+# 1. kaappi+Pl+In kaapissa - kaapeissa
+# 2. matto+Pl+All mattoilla - mattoille
+# 3. katu+Sg+All kadulla - kadulle
+# 4. vihta+Sg+All vihdalla - vihdalle
+# 5. poika+Sg+All pojalla - pojalle
+# 6. työtön+Sg+Gen	työttömen - työttömän
+# 7. tie+Pl+All teillä - teille
+# 8. ilta+Sg+All	illalla - illalle
+# 9. kampa+Sg+All kammalla - kammalle
+# 10. poika+Pl+All pojilla - pojalle
+# 11. piha+Pl+All	pihoilla - pihoille
