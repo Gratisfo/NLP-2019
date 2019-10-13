@@ -7,7 +7,7 @@ define Vowel FrontVowel | NeutralVowel | BackVowel | A | E;
 define Letter Vowel | Consonant;
 
 # Определяем класс падежей, множественного и единственного числа
-define Case "+Nom" | "+Gen" | "+Part" | "+In" | "+All" ;
+define Case "+Nom" | "+Gen" | "+Part" | "+In" | "+All" | "+El" | "+Abl" | "+Ad" | "+Ill" ;
 define Number "+Sg" | "+Pl" ; 
 
 # Определяем классы задних и передних основ 
@@ -27,15 +27,26 @@ define GenDen "+Gen" -> d e n || Vowel Vowel "+Pl" _ ;
 define Gen "+Gen" -> E n || _ ;
 define Genetive GenDen .o. Gen ;
 
-# Определяем окончание остальных падежей (два случая для партитива, инессива и аллатива)
+# Определяем окончание остальных падежей 
 define PartTa "+Part" -> t A || [ Consonant Vowel Vowel | Consonant ] Number _ ;
 define PartA "+Part" -> A || _ ;
 
-define LocativeCases "+In" -> s s A , "+All" -> l l A || _ ;
+define LocativeCases "+In" -> s s A , "+All" -> l l E, "+El" -> s t A,  "+Abl" -> l t A,  "+Ad" -> l l A || _ ;
+#Определяем иллатив для единственного числа
+define aIll "+Ill" -> A n || [ a ] Number _ ;
+define uIll "+Ill" -> u n || [ u ] Number _ ;
+define iIll "+Ill" -> i n || [ i ] Number _ ;
+define oIll "+Ill" -> o n || [ o ] Number _ ;
+define eIll "+Ill" -> e n || [ e ] Number _ ;
 
-define OtherCases PartTa .o. PartA .o. LocativeCases ;
 
-# Определяем правила чередования основ - гласные
+define Illative aIll .o. uIll .o. iIll .o. oIll .o. eIll ;
+
+#для множественного числа тоже не получилось, я пыталась, правда
+
+define OtherCases PartTa .o. PartA .o. LocativeCases .o. Illative;
+
+# Определяем правила чередования основ - гласные образование единственного и множественного числа. 
 define Sg "+Sg" -> "^" || _ ;
 define OmitA ä -> 0, i -> 0 || _ "+Pl";
 define Ai2Oi a -> o || [ a | e | i ] Vowel* Consonant+ _ "+Pl";
@@ -45,7 +56,7 @@ define Pl "+Pl" -> "^" i || _ ;
 
 define NumberInfl Sg .o. OmitA .o. Ai2i .o. Ai2Oi .o. OmitFirst .o. Pl ;
 
-# корень с лабиальными гласными не изменяется, а во множественном числе i меняется j между гласными 
+# корень с лабиальными гласными не изменяется, а вo множественном числе i меняется j между гласными 
 # применения правил на употребление 
 define JotPl i -> j || Vowel "^"* _ "^"* Vowel ;
 define HarmonyBack A -> a || BackStem "^" Letter* _;
@@ -65,7 +76,7 @@ define EReal E -> e || _;
 
 define Alternations N2M  .o. EOmit .o. EReal .o. ThreeLetter .o. TwoLetter .o. SingleP .o. SingleTK .o. DoublePTK ;
 
-# Объединяем все существующие аффиксы
+# объединяет все существующие аффиксы
 define Affixes Nominatives .o. Genetive .o. OtherCases .o. NumberInfl .o. Alternations .o. Phonetics;
 
 # Удаляем символ границы морфем
