@@ -5,6 +5,8 @@
 №| Описание          |Ссылка на работу  
  ------------- |:-------------| -----:
 **1** |Определения языка в ВК     | [*Код*](https://github.com/Gratisfo/NLP-2019/blob/master/Homework/HW1_language_detection.ipynb) 
+**2** |Финское словоизменение    | [*Код*](https://github.com/Gratisfo/NLP-2019/tree/master/Homework/HW2) 
+
 
 почта для связи: aniatta1999@gmail.com
 
